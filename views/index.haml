@@ -1,0 +1,29 @@
+!!! XHTML
+%html
+  %head
+    %title= @title
+    %meta{'http-equiv' => 'content', :content => 'text/html; charset=urf-8'}
+    :javascript
+      var app_root = "#{app_root}";
+    %script{:type => 'text/javascript', :src => "#{app_root}/js/jquery.js"}
+    %script{:type => 'text/javascript', :src => "http://cdn.jquerytools.org/1.2.6/jquery.tools.min.js"}
+    %link{:rel => 'stylesheet', :href => "#{app_root}/css/main.css", :type => 'text/css'}
+    %link{:rel => 'stylesheet', :href => "#{app_root}/css/tabs.css", :type => 'text/css'}
+  %body
+    %div#title
+      %h1 #{@title}
+    %div#tabs
+      %ul#menu{:class => "css-tabs skin2"}
+        - @menuArray.each do |menu|
+          %li
+            %a{:href => "#"} #{menu}
+
+    %div{:class => "css-panes skin2"}
+      - @menuArray.each do |menu|
+        %div
+          - getContentFromGyazz(@wiki,menu).each do |line|
+            #{line}
+
+    %div
+      :javascript
+        $("ul.skin2").tabs("div.skin2 > div");
